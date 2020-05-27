@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<!-- <mapper> -->
+<mapper namespace="com.yamada.springboot.domain.repository.mybatis.WeightMapper">
+
+	<!-- マッピング定義 -->
+	<resultMap type="com.yamada.springboot.domain.model.Weight" id="weight">
+		<id column="weight_id" property="weightId" />
+		<result column="weight" property="weight" />
+		<result column="body_fat" property="bodyFat" />
+		<result column="subcutaneous_fat" property="subcutaneousFat" />
+		<result column="record_date" property="recordDate" />
+		<result column="user_id" property="userId" />
+		<result column="created_at" property="createdAt" />
+		<result column="updated_at" property="updatedAt" />
+	</resultMap>
+	
+	<insert id="insertOne" parameterType="com.yamada.springboot.domain.model.Weight">
+		INSERT INTO weights 
+		(weight, body_fat, subcutaneous_fat, record_date, user_id, created_at, updated_at) 
+		VALUES
+		(#{weight}, #{bodyFat}, #{subcutaneousFat}, #{recordDate}, #{userId}, #{createdAt}, #{updatedAt})
+	</insert>
+	
+	<select id="selectMany" parameterType="int" resultMap="weight">
+		SELECT * FROM weights WHERE user_id = #{userId}
+	</select>
+	
+	<update id="updateOne"
+	 parameterType="com.yamada.springboot.domain.model.Weight">
+		UPDATE weights SET weight = #{weight}, body_fat = #{bodyFat}, subcutaneous_fat = #{subcutaneousFat}, updated_at = #{updatedAt} WHERE weight_id = #{weightId}
+	</update>
+	
+	<delete id="deleteOne" parameterType="int">
+		DELETE FROM weights WHERE weight_id = #{weightId}
+	</delete>
+
+</mapper>
