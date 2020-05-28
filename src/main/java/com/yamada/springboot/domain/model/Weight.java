@@ -9,9 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
@@ -25,35 +23,34 @@ public class Weight {
 	private Long id;
 
 	//	体重
-	@NotBlank
-	@Min(0)
-	@Max(500)
+	@NotNull
+	@Digits(integer=3, fraction=1)
 	private double weight;
 
 	//	体脂肪
-	@NotBlank
+	@NotNull
 	@Digits(integer=3, fraction=1)
 	private double bodyFat;
 
 	//	皮下脂肪
-	@NotBlank
+	@NotNull
 	@Digits(integer=3, fraction=1)
 	private double subcutaneousFat;
 
 	//	記録日
-	@NotBlank
+	@NotNull
 	private Date recordDate;
 
 	//	ユーザー
-	@NotBlank
+	@NotNull
 	private Long userId;
 
 	//	登録日
-	@NotBlank
+	@NotNull
 	private Timestamp createdAt;
 
 	//	更新日
-	@NotBlank
+	@NotNull
 	private Timestamp updatedAt;
 
 }

@@ -1,5 +1,6 @@
 package com.yamada.springboot.app.controller;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.yamada.springboot.app.common.payload.request.LoginRequest;
+import com.yamada.springboot.app.common.payload.request.WeightRequest;
 import com.yamada.springboot.app.common.security.jwt.JwtUtils;
 import com.yamada.springboot.app.common.security.services.UserDetailsImpl;
 import com.yamada.springboot.domain.model.Weight;
@@ -38,7 +39,7 @@ public class WeightRestController {
 	public String getHello(){		
 		return "Hello!";
 	}
-	
+
 	@GetMapping("/api/weight")
 	public List<Weight> getUserWeight() {
 		Authentication authentication = SecurityContextHolder.getContext()
@@ -50,17 +51,37 @@ public class WeightRestController {
 
 		return list;
 	}
-	
+
 	@PostMapping("/api/weight")
-	public List<Weight> postUserWeight(@Valid @RequestBody LoginRequest loginRequest) {
+	public String postUserWeight(@Valid @RequestBody WeightRequest weightRequest) {
 		Authentication authentication = SecurityContextHolder.getContext()
 				.getAuthentication();
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 		Long userId = userDetails.getId();
 
-		List<Weight> list = weightRepository.findByUserId(userId);
 
-		return list;
+		if (weightRepository.existsByRecordDate(weightRequest.getRecordDate())) {
+			return "exist RecordDate...";
+		}else {
+
+			Weight weight = new Weight();
+			weight.setWeight(weightRequest.getWeight());
+			weight.setBodyFat(weightRequest.getBodyFat());
+			weight.setSubcutaneousFat(weightRequest.getSubcutaneousFat());
+			weight.setRecordDate(weightRequest.getRecordDate());
+			weight.setUserId(userId);
+			
+	        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+			
+			weight.setCreatedAt(timestamp);
+			weight.setUpdatedAt(timestamp);
+			
+			weightRepository.save(weight);
+			
+			return "Successful";
+		}
+
+
 	}
 
 }

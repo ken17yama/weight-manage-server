@@ -1,5 +1,6 @@
 package com.yamada.springboot.domain.repository.jpa;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,5 +12,5 @@ import com.yamada.springboot.domain.model.Weight;
 public interface WeightRepository extends JpaRepository<Weight, Long> {
 	List<Weight> findByUserId(Long userId);
 
-	Boolean existsByUserId(Long userId);
+	Boolean existsByRecordDate(Date recordDate);
 }
