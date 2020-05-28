@@ -22,7 +22,7 @@ public class Weight {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 
 	//	体重
 	@NotBlank
@@ -46,7 +46,7 @@ public class Weight {
 
 	//	ユーザー
 	@NotBlank
-	private Integer userId;
+	private Long userId;
 
 	//	登録日
 	@NotBlank

@@ -9,7 +9,7 @@ import com.yamada.springboot.domain.model.Weight;
 
 @Repository
 public interface WeightRepository extends JpaRepository<Weight, Long> {
-	List<Weight> findByUserId(Integer userId);
+	List<Weight> findByUserId(Long userId);
 
-	Boolean existsByUserId(Integer userId);
+	Boolean existsByUserId(Long userId);
 }
