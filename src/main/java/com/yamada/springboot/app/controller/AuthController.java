@@ -32,7 +32,7 @@ import com.yamada.springboot.domain.model.User;
 import com.yamada.springboot.domain.repository.jpa.RoleRepository;
 import com.yamada.springboot.domain.repository.jpa.UserRepository;
 
-@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -61,8 +61,6 @@ public class AuthController {
 		String jwt = jwtUtils.generateJwtToken(authentication);
 		
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-		
-		System.out.println(userDetails.getId());
 		
 		List<String> roles = userDetails.getAuthorities().stream()
 				.map(item -> item.getAuthority())

@@ -46,7 +46,6 @@ public class Weight {
 	private Long userId;
 
 	//	登録日
-	@NotNull
 	private Timestamp createdAt;
 
 	//	更新日
